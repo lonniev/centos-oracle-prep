@@ -104,8 +104,9 @@ end
 
 %w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip )
 .each do |file|
-  execute "wget remote #{file}" do
-    command "wget -q -N -c -o /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
+  bash "wget remote #{file}" do
+    cwd "/media/oracle"
+    code "wget -q -N -c -o /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
     user 'oracle'
     group 'oracle'
     creates "/media/oracle/#{file}"
