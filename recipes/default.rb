@@ -106,10 +106,9 @@ end
 .each do |file|
   bash "wget remote #{file}" do
     cwd "/media/oracle"
-    code "wget -q -N -c -o /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
+    code "wget -q -o /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
     user 'oracle'
     group 'oinstall'
-    creates "/media/oracle/#{file}"
   end
 end
 
@@ -120,6 +119,5 @@ end
     command "unzip -q -o -d /home/oracle /media/oracle/#{zip}"
     user 'oracle'
     group 'oinstall'
-    not_if { ::File.exist?('/home/oracle/database') }
   end
 end
