@@ -106,7 +106,7 @@ end
 .each do |file|
   execute "wget remote #{file}" do
     command "wget -q -N -c -o /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
-    owner 'oracle'
+    user 'oracle'
     group 'oracle'
     mode '0755'
     creates "/media/oracle/#{file}"
