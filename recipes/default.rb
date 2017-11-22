@@ -70,7 +70,7 @@ end
 end
 
 # give ~oracle a useful .bash_profile
-file ~oracle/.bash_profile do
+file "/home/oracle/.bash_profile" do
   owner 'oracle'
   group 'oracle'
   mode '0755'
@@ -110,8 +110,8 @@ end
 
 # now unzip the downloaded files
 %w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip ).each do |zip|
-  execute 'unzip #{zip}' do
-    command 'unzip -q -o -d /home/oracle /media/oracle/#{zip}'
+  execute "unzip #{zip}" do
+    command "unzip -q -o -d /home/oracle /media/oracle/#{zip}"
     user 'oracle'
     group 'oracle'
   end
