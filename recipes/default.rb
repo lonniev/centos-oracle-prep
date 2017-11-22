@@ -104,12 +104,12 @@ end
 
 %w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip )
 .each do |file|
-  remote_file "/media/oracle/#{file}" do
-    source "https://storage.googleapis.com/windchill/#{file}"
+  execute "wget remote #{file}" do
+    command "wget -q -N -c -o /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
     owner 'oracle'
     group 'oracle'
     mode '0755'
-    action :create
+    creates "/media/oracle/#{file}"
   end
 end
 
