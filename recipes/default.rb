@@ -106,7 +106,7 @@ end
 .each do |file|
   bash "wget remote #{file}" do
     cwd "/media/oracle"
-    code "wget -q -o /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
+    code "wget -q -O /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
     user 'oracle'
     group 'oinstall'
   end
