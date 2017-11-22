@@ -23,7 +23,7 @@
   wget
   less
   unzip
-  java
+  java-1.8.0-openjdk-devel
   binutils.x86_64
   compat-libcap1.x86_64
 	gcc.x86_64
