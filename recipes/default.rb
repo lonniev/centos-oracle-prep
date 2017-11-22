@@ -96,7 +96,7 @@ end
 .each do |dir|
   directory dir.to_s do
     owner 'oracle'
-    group 'oracle'
+    group 'oinstall'
     mode '0777'
     action :create
   end
@@ -108,7 +108,7 @@ end
     cwd "/media/oracle"
     code "wget -q -N -c -o /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
     user 'oracle'
-    group 'oracle'
+    group 'oinstall'
     creates "/media/oracle/#{file}"
   end
 end
@@ -119,6 +119,7 @@ end
   execute "unzip #{zip}" do
     command "unzip -q -o -d /home/oracle /media/oracle/#{zip}"
     user 'oracle'
-    group 'oracle'
+    group 'oinstall'
+    not_if { ::File.exist?('/home/oracle/database') }
   end
 end
