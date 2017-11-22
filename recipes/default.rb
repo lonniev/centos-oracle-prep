@@ -19,13 +19,13 @@
 #
 
 # a variety of utilities and build packages that the Oracle installer will need
-
 %w(
   wget
   less
   unzip
   java
-  binutils.x86_64\n\tcompat-libcap1.x86_64
+  binutils.x86_64
+  compat-libcap1.x86_64
 	gcc.x86_64
 	gcc-c++.x86_64
 	glibc.i686
@@ -63,10 +63,12 @@ user 'oracle' do
 end
 
 # add the Oracle groups
-%w( oinstall dba ).each do |grp|
+%w( oinstall dba )
+.each do |grp|
   group grp.to_s do
-  action :create
-  members 'oracle'
+    action :create
+    members 'oracle'
+  end
 end
 
 # give ~oracle a useful .bash_profile
@@ -90,15 +92,18 @@ file "/home/oracle/.bash_profile" do
 end
 
 # copy over the Oracle images from some accessible remote site
-%w( /media /media/oracle ).each do |dir|
+%w( /media /media/oracle )
+.each do |dir|
   directory dir.to_s do
-  owner 'oracle'
-  group 'oracle'
-  mode '0777'
-  action :create
+    owner 'oracle'
+    group 'oracle'
+    mode '0777'
+    action :create
+  end
 end
 
-%w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip ).each do |file|
+%w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip )
+.each do |file|
   remote_file "/media/oracle/#{file}" do
     source "https://storage.googleapis.com/windchill/#{file}"
     owner 'oracle'
@@ -109,7 +114,8 @@ end
 end
 
 # now unzip the downloaded files
-%w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip ).each do |zip|
+%w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip )
+.each do |zip|
   execute "unzip #{zip}" do
     command "unzip -q -o -d /home/oracle /media/oracle/#{zip}"
     user 'oracle'
