@@ -60,11 +60,10 @@ user 'oracle' do
   manage_home true
   shell '/bin/bash'
   password '$1$JvHNBHi5$Iuq39SXBDq7IIjNUxOqfo0'
-  group 'oracle'
 end
 
 # add the Oracle groups
-%w( oinstall dba )
+%w( oinstall dba oracle )
 .each do |grp|
   group grp.to_s do
     action :create
