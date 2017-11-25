@@ -102,13 +102,21 @@ end
   end
 end
 
-%w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip )
+images = node['centos-oracle-prep']['images']
+sums = node['centos-oracle-prep']['sums']
+
+md5sums = images.zip( sums ).to_h
+
+images
 .each do |file|
   bash "wget remote #{file}" do
     cwd "/media/oracle"
-    code "wget -q -O /media/oracle/#{file} https://storage.googleapis.com/windchill/#{file}"
+    code "wget -q -O /media/oracle/#{file} #{node['centos-oracle-prep']['images_repo']}#{file}"
     user 'oracle'
     group 'oinstall'
+
+    not_if { ( File.exists?( "/media/oracle/#{file}" ) ) && ( Digest::MD5.file( "/media/oracle/#{file}" ).hexdigest == md5sums[ file ] ) }
+
   end
 end
 
