@@ -121,7 +121,7 @@ images
 end
 
 # now unzip the downloaded files
-%w( linuxamd64_12102_database_1of2.zip linuxamd64_12102_database_2of2.zip )
+images
 .each do |zip|
   execute "unzip #{zip}" do
     command "unzip -q -o -d /home/oracle /media/oracle/#{zip}"
